@@ -1,9 +1,9 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import { configureStore, ThunkAction, Action, AsyncThunkPayloadCreator, Dispatch, AsyncThunkOptions, AsyncThunk } from '@reduxjs/toolkit';
+import userReducer from '../api/userSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    user: userReducer,
   },
 });
 
@@ -15,3 +15,27 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+declare module "@reduxjs/toolkit" {
+  type AsyncThunkConfig = {
+      state?: unknown;
+      dispatch?: Dispatch;
+      extra?: unknown;
+      rejectValue?: unknown;
+      serializedErrorType?: unknown;
+  };
+
+  function createAsyncThunk<
+      Returned,
+      ThunkArg = void,
+      ThunkApiConfig extends AsyncThunkConfig = { state: RootState } // here is the magic line
+  >(
+      typePrefix: string,
+      payloadCreator: AsyncThunkPayloadCreator<
+          Returned,
+          ThunkArg,
+          ThunkApiConfig
+      >,
+      options?: AsyncThunkOptions<ThunkArg, ThunkApiConfig>,
+  ): AsyncThunk<Returned, ThunkArg, ThunkApiConfig>;
+}
