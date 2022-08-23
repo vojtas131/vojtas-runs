@@ -3,8 +3,18 @@ import { Grommet } from 'grommet';
 import UserPage from './pages/UserPage';
 
 function App() {
+  const theme = {
+    global: {
+      font: {
+        family: 'Poppins',
+        size: '14px',
+        height: '20px',
+      },
+    },
+  };
+
   return (
-    <Grommet plain>
+    <Grommet theme={theme}>
       <UserPage />
     </Grommet>
   );
