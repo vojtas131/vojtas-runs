@@ -22,6 +22,9 @@ export const userSlice = createSlice({
     reducers: {
         setApi: (state, action) => {
             state.apiKey = action.payload;
+        },
+        resetRuns: (state) => {
+            state.runs = []
         }
     },
 
@@ -34,7 +37,7 @@ export const userSlice = createSlice({
 
 });
 
-export const { setApi } = userSlice.actions;
+export const { setApi, resetRuns } = userSlice.actions;
 
 export const fetchRuns = createAsyncThunk<FinalRun[]>(
     'user/fetchRuns',
